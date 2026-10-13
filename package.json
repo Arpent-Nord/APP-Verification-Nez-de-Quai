@@ -1,0 +1,16 @@
+{
+  "name": "nez-de-quai",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Contrôle du coffrage de nez de quai vs TQC du rail intérieur et acceptation de coulée (application web statique)",
+  "type": "module",
+  "scripts": {
+    "serve": "python3 -m http.server 8080",
+    "test": "node tests/engine.test.mjs && node tests/xlsx.test.mjs && node tests/second.test.mjs"
+  },
+  "devDependencies": {
+    "@xmldom/xmldom": "0.8.10",
+    "jszip": "3.10.1",
+    "sql.js": "1.10.3"
+  }
+}

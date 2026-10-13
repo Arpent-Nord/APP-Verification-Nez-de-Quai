@@ -1,4 +1,3 @@
-[README.md](https://github.com/user-attachments/files/33395823/README.md)
 # Contrôle nez de quai – acceptation de coulée
 
 Application web, utilisable sur le chantier (téléphone, tablette ou portable), pour contrôler le coffrage du nez de quai avant le bétonnage. Elle compare le coffrage :
