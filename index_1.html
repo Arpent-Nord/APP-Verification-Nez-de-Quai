@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0b3d5c">
+  <title>Contrôle nez de quai</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+  <header class="top">
+    <div>
+      <h1>Contrôle nez de quai</h1>
+      <p class="sub">Coffrage vs TQC du rail intérieur – acceptation de coulée (NouvLR)</p>
+    </div>
+    <span id="offline" class="pill" hidden>Hors ligne</span>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2><span class="step">1</span> Fichiers du levé</h2>
+
+      <label class="file">
+        <span class="lbl">Rapport FRT (.txt) <em>requis</em></span>
+        <input type="file" id="frt" accept=".txt,.frt,text/plain">
+        <span class="name" id="frtName">Aucun fichier</span>
+      </label>
+
+      <label class="file">
+        <span class="lbl">Alignements de voie GEDO (.sie) <em>requis – un par voie</em></span>
+        <input type="file" id="sie" accept=".sie" multiple>
+        <span class="name" id="sieName">Aucun fichier</span>
+      </label>
+      <div class="stored" id="storedSie" hidden>
+        <span id="storedSieText"></span>
+        <button type="button" class="link" id="forgetSie">Oublier</button>
+      </div>
+      <label class="check"><input type="checkbox" id="rememberSie" checked> Mémoriser les alignements sur cet appareil</label>
+
+      <label class="file">
+        <span class="lbl">Dernier Excel cumulatif (.xlsx) <em>pour générer l'Excel</em></span>
+        <input type="file" id="xlsx" accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+        <span class="name" id="xlsxName">Aucun fichier</span>
+      </label>
+
+      <details class="params">
+        <summary>Paramètres (tolérances, valeurs nominales, codes)</summary>
+        <div class="grid">
+          <label>Tolérance ΔH as-built (± mm)<input type="number" step="0.1" id="tolH"></label>
+          <label>Tolérance ΔV as-built (± mm)<input type="number" step="0.1" id="tolV"></label>
+          <label>Déport coffrage / axe théorique (m)<input type="number" step="0.0001" id="nomHTheo"></label>
+          <label>Déport coffrage / jauge rail as-built (m)<input type="number" step="0.0001" id="nomHAsBuilt"></label>
+          <label>Hauteur coffrage / dessus de rail (m)<input type="number" step="0.0001" id="nomV"></label>
+          <label>Code rail TQC<input type="text" id="codeRail"></label>
+          <label>Code coffrage<input type="text" id="codeCoffrage"></label>
+          <label>Destinataires courriel (séparés par ,)<input type="text" id="mailTo" placeholder="nom@exemple.com"></label>
+        </div>
+        <button type="button" class="link" id="resetParams">Valeurs par défaut</button>
+      </details>
+
+      <button type="button" class="primary" id="run" disabled>Calculer</button>
+      <p class="hint">Les fichiers sont traités uniquement sur cet appareil : rien n'est envoyé sur Internet.</p>
+    </section>
+
+    <div id="error" class="alert" hidden></div>
+
+    <section id="results" hidden>
+      <div id="verdict" class="verdict"></div>
+      <section class="card">
+        <h2><span class="step">2</span> Résultats</h2>
+        <div id="summary" class="summary"></div>
+        <ul id="warnings" class="warnings"></ul>
+        <div id="tracks"></div>
+      </section>
+
+      <section class="card">
+        <h2><span class="step">3</span> Excel et transmission</h2>
+        <p id="xlsxHint" class="hint"></p>
+        <button type="button" class="primary" id="makeXlsx" disabled>Générer l'Excel</button>
+        <div id="xlsxOut" hidden>
+          <p id="xlsxReport" class="ok-text"></p>
+          <div class="actions">
+            <button type="button" class="primary" id="share">Partager / Courriel</button>
+            <button type="button" id="download">Télécharger</button>
+            <button type="button" id="mail">Courriel (texte)</button>
+          </div>
+          <div class="tabs" id="sheetTabs" role="tablist"></div>
+          <div class="sheet" id="sheetView"></div>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <footer class="foot">Arpent Nord – contrôle nez de quai · v<span id="ver"></span></footer>
+
+  <script src="vendor/jszip.min.js"></script>
+  <script src="vendor/sql-wasm.js"></script>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
